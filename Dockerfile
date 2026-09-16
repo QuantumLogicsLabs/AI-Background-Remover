@@ -32,10 +32,12 @@ WORKDIR /app
 # Copy requirements first to leverage Docker layer caching.
 COPY requirements.txt .
 
-# Install deps; swap onnxruntime for GPU variant when requested
+# Install deps; swap onnxruntime and torch for GPU variant when requested
 RUN pip install --no-cache-dir --upgrade pip \
  && if [ "$USE_GPU" = "true" ]; then \
-        sed -i 's/^onnxruntime==.*/# onnxruntime (replaced by gpu build)/' requirements.txt \
+        sed -i 's|whl/cpu|whl/cu121|g' requirements.txt \
+     && sed -i 's/+cpu/+cu121/g' requirements.txt \
+     && sed -i 's/^onnxruntime==.*/# onnxruntime (replaced by gpu build)/' requirements.txt \
      && sed -i 's/^# onnxruntime-gpu/onnxruntime-gpu/' requirements.txt; \
     fi \
  && pip install --no-cache-dir -r requirements.txt

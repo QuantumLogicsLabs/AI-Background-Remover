@@ -3,10 +3,11 @@
 # Covers: AI inference pipeline + FastAPI backend
 # =========================================================
 
-# ---------- Core Deep Learning ----------
-torch==2.3.1
-torchvision==0.18.1
-# GPU builds: uncomment the line below and remove the torch/torchvision lines above
+# ---------- Core Deep Learning (CPU Build) ----------
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.3.1+cpu
+torchvision==0.18.1+cpu
+# GPU builds: uncomment the lines below and remove the cpu lines above
 # --extra-index-url https://download.pytorch.org/whl/cu121
 # torch==2.3.1+cu121
 # torchvision==0.18.1+cu121
